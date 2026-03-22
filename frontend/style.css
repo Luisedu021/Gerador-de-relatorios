@@ -1,0 +1,445 @@
+.nav {
+  display: flex;
+  padding: 16px 0;
+  justify-content: center;
+  align-items: center;
+  gap: 303px;
+  align-self: stretch;
+
+  background-color: transparent;
+}
+
+.Ata-Reuniao {
+  color: #d6dde6;
+  text-align: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -1px;
+
+  margin-top: 40px;
+}
+
+body {
+  background-color: #000000;
+
+  background:
+    radial-gradient(
+      193.34% 155.87% at 50% -1.55%,
+      rgba(8, 15, 23, 0.7) 23.56%,
+      rgba(110, 0, 226, 0.7) 100%
+    ),
+    #080f17;
+
+  background-size: 100% 500px;
+
+  background-repeat: no-repeat;
+
+  color: #020101;
+}
+
+.logo-mid {
+  background-image: url("assets/Mega_jr.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+
+  width: 150px;
+  height: 60px;
+  display: block;
+
+  /* TIREI o margin: 0 auto daqui para ela não ir pro meio.
+     Agora usamos as distâncias exatas do Figma: */
+  margin-top: 30px;
+  margin-left: 41px;
+}
+
+.container {
+  /* Mantém todo o seu estilo visual intacto! */
+  border-radius: 16px;
+  border: 1.5px solid rgba(214, 221, 230, 0.2);
+  background: #1e1e1e;
+  box-shadow:
+    0 311px 87px 0 rgba(0, 0, 0, 0),
+    0 199px 80px 0 rgba(0, 0, 0, 0),
+    0 112px 67px 0 rgba(0, 0, 0, 0.02),
+    0 50px 50px 0 rgba(0, 0, 0, 0.03),
+    0 12px 27px 0 rgba(0, 0, 0, 0.03);
+
+  /* --- A MÁGICA DA RESPONSIVIDADE AQUI --- */
+
+  /* 1. Largura flexível e centralizada */
+  width: 90%; /* Em telas menores, o card ocupa 90% do espaço, deixando uma bordinha de respiro */
+  max-width: 1024px; /* Em telas gigantes, ele trava em 1024px para não ficar esticado demais */
+
+  /* 2. Margem resumida (40px em cima/embaixo, 'auto' centraliza nas laterais) */
+  margin: 40px auto;
+
+  /* 3. Altura segura */
+  min-height: 720px; /* Mantém os 720px no computador, mas permite que o card cresça para baixo se o texto do celular empurrar as coisas */
+
+  /* Mantém o comportamento interno */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between; /* Empurra a logo para a esquerda e o botão para a direita */
+  align-items: flex-start; /* Alinha no topo */
+  /* Vamos tirar o padding daqui e colocar margens nos filhos, para controle preciso */
+  padding: 0;
+}
+
+.side-box {
+  display: flex;
+  flex-direction: column; /* Empilha label e inputs */
+  flex: 1; /* Mais estreita (1/3 do espaço) */
+
+  /* Mantém o alinhamento esticado por padrão */
+  align-self: stretch; /* Garante que ela estique até o final da altura */
+}
+
+.side-box label {
+  color: var(--text-gray);
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.datetime-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-small {
+  /* Estilo para parecer uma caixa escura e sutil, exatamente como as textareas */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.05
+  ); /* Leve transparência branca sobre o escuro */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+  padding: 12px;
+  border-radius: 8px;
+  color-scheme: dark; /* Faz o calendário do navegador ficar escuro */
+  font-size: 14px;
+}
+
+.caixa-texto,
+.caixa-data-hora {
+  /* Cor de fundo idêntica (um escuro sutil) */
+  background-color: rgba(255, 255, 255, 0.05);
+
+  /* Borda fina e elegante para todas */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* Arredondamento igual (ajuste para 8px ou 16px dependendo do seu Figma) */
+  border-radius: 12px;
+
+  padding: 20px;
+  color: #ffffff;
+  font-size: 16px;
+  overflow: hidden;
+  resize: none;
+
+  /* Faz todas esticarem */
+  flex: 1;
+}
+
+.caixa-data-hora {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.caixa-texto::placeholder,
+.caixa-data-hora::placeholder {
+  color: #ffffff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 18px; /* Reduzi um pouco para não ficar gigante, mas pode aumentar se quiser! */
+  font-weight: 400;
+  opacity: 1;
+}
+
+.card-body {
+  display: flex; /* Coloca as colunas lado a lado */
+  flex: 1; /* Faz o corpo ocupar todo o espaço restante do card (720px) */
+  gap: 20px;
+  padding: 20px 41px 41px 41px;
+
+  align-items: stretch;
+}
+
+.coluna-textos {
+  display: flex;
+  flex-direction: column; /* Empilha as caixas */
+  gap: 20px;
+  flex: 2; /* Mais larga (2/3 do espaço) */
+
+  /* Mantém o alinhamento esticado por padrão */
+
+  /* align-items: stretch; */
+}
+
+.converter {
+  display: flex; /* Coloca a div da esquerda e a da direita lado a lado */
+  gap: 20px; /* Espaço entre as duas colunas */
+  min-height: 580px;
+  /* Usa as mesmas medidas do seu card principal para ficar alinhado! */
+  width: 90%;
+  max-width: 1024px;
+  margin: 40px auto; /* Centraliza na tela e dá um respiro do card de cima */
+
+  overflow: hidden;
+
+  border-radius: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    176deg,
+    rgba(255, 255, 255, 0.03) 27.37%,
+    rgba(162, 210, 96, 0.04) 96.85%
+  );
+}
+
+.converter-left {
+  flex: 1; /* Ocupa 1 pedaço do espaço */
+
+  background-image: url("assets/purple_conversor.svg");
+  background-size: cover; /* A MÁGICA AQUI: faz a imagem preencher todo o espaço sem distorcer */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+
+  /* Mantém o alinhamento esticado por padrão */
+  align-self: stretch;
+}
+
+.converter-right {
+  flex: 3; /* Ocupa 3 pedaços do espaço (é 3x mais largo que a imagem roxa) */
+
+  display: flex;
+  justify-content: center; /* Centraliza o botão na horizontal */
+  align-items: center; /* Centraliza o botão na vertical */
+}
+
+.btn-amarelo {
+  background-color: #ffde59; /* Amarelo da Mega */
+  color: #111827; /* Texto escuro */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  /* Distância para desgrudar do teto e da direita */
+  margin-top: 30px;
+  margin-right: 41px;
+}
+
+.btn-amarelo-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+
+  background-color: #ffde59; /* Amarelo da Mega */
+  color: #111827; /* Texto escuro */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-amarelo:hover,
+.btn-amarelo-2:hover {
+  background-color: rgba(231, 219, 104, 0.05);
+
+  /* INGREDIENTE 2: O Desfoque do Fundo (A CHAVE DE TUDO!) */
+  /* Esta propriedade diz ao navegador: 'desfoque tudo o que estiver ATRÁS de mim em 10px' */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(209, 187, 87, 0.1);
+  gap: 36px;
+
+  /* Detalhes Finais para ficar igual ao seu Figma */
+  border-radius: 8px;
+  padding: 12px 24px; /* Espaço interno */
+  color: #ffffff; /* Texto branco */
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.btn-amarelo:active,
+.btn-amarelo-2:active {
+  background-color: rgba(255, 233, 32, 0.05);
+
+  /* INGREDIENTE 2: O Desfoque do Fundo (A CHAVE DE TUDO!) */
+  /* Esta propriedade diz ao navegador: 'desfoque tudo o que estiver ATRÁS de mim em 10px' */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(250, 218, 75, 0.1);
+  gap: 36px;
+
+  /* Detalhes Finais para ficar igual ao seu Figma */
+  border-radius: 8px;
+  padding: 12px 24px; /* Espaço interno */
+  color: #ffffff; /* Texto branco */
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.mega-logo {
+  display: flex;
+  align-items: flex-start;
+  gap: 374px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+/* ... (resto do seu código CSS acima) ... */
+/* Base do Footer */
+.mega-footer {
+  display: flex;
+  justify-content: space-between; /* Distribui os 3 blocos igualmente */
+  align-items: center;
+  padding: 30px 40px; /* Mais espaço nas laterais */
+  background-color: #080f17;
+  border-top: 1.5px solid rgba(214, 221, 230, 0.2);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 40px;
+}
+
+.footer-section {
+  display: flex;
+  align-items: center;
+}
+
+/* --- Bloco 1: Localização --- */
+.location-block {
+  flex: 1; /* Ocupa 1/3 do espaço */
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.location-icon img {
+  width: 20px; /* Reduzi um pouco para ficar mais delicado como na imagem */
+  height: auto;
+  filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
+    hue-rotate(349deg) brightness(101%) contrast(98%);
+}
+
+.address-text p {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 12.4px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* --- Bloco 2: Logo Central --- */
+.logo-block {
+  flex: 1; /* Ocupa 1/3 do espaço */
+  justify-content: center; /* Centraliza a logo no meio do footer */
+}
+
+.logo-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaço entre o pato e o texto */
+}
+
+.mega-duck-logo {
+  width: 38px; /* Ajuste o tamanho do pato conforme necessário */
+  height: auto;
+  filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
+    hue-rotate(349deg) brightness(101%) contrast(98%);
+}
+
+.logo-text-wrapper p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  margin: 0;
+  font-size: 16px; /* Tamanho da fonte MEGA JR. */
+  line-height: 1.1;
+  color: #ffde59; /* Amarelo Mega */
+}
+
+/* --- Bloco 3: Redes Sociais --- */
+.social-block {
+  flex: 1; /* Ocupa 1/3 do espaço */
+  justify-content: flex-end; /* Empurra tudo para a direita */
+}
+
+.social-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaço entre o logo US e as redes sociais */
+}
+
+.us-block {
+  display: flex;
+  align-items: center;
+  padding-right: 20px; /* Espaço extra antes das redes */
+  /* border-right: 1px solid rgba(255,255,255,0.1); Opcional: linha divisória fina */
+}
+
+.us-logo {
+  height: 30px; /* Altura do logo "US Design" */
+  width: auto;
+}
+
+/* Ícones Instagram e LinkedIn */
+.social-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.2s ease; /* Efeitinho suave no hover */
+}
+
+.social-icon img {
+  width: 100%;
+  height: 100%;
+  filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
+    hue-rotate(349deg) brightness(101%) contrast(98%);
+}
+
+.social-icon:hover {
+  transform: scale(1.1); /* Ícone cresce um pouquinho ao passar o mouse */
+}
+
+.Ata-Reuniao h1::after {
+  content: "|"; /* O caractere do cursor */
+  margin-left: 5px;
+  color: #ffde59; /* Deixei amarelo para combinar com os botões, mas pode ser #d6dde6 */
+  animation: piscar 0.8s infinite;
+}
+
+@keyframes piscar {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

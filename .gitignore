@@ -1,0 +1,11 @@
+# Ignorar a pasta do ambiente virtual
+.venv/
+venv/
+env/
+
+# Ignorar arquivos temporários do Python
+__pycache__/
+*.pyc
+
+# Ignorar o Mac OS guardando arquivos de sistema (se alguém usar Mac no projeto)
+.DS_Store
