@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fpdf import FPDF
@@ -42,7 +42,7 @@ class MegaJrPDF(FPDF):
         self.set_text_color(150, 150, 150)
         self.cell(0, 10, "Ata gerada automaticamente pela MEGA IA.", align="L")
         
-        self.set_fill_color(255, 222, 89)
+        self.set_fill_color(255, 222, 89) # Amarelo Mega
         self.rect(0, 290, 210, 7, style="F")
         
         self.set_y(-7)
@@ -54,11 +54,10 @@ class MegaJrPDF(FPDF):
         self.set_text_color(0, 0, 0)
         self.cell(0, 5, f'Página {self.page_no()}/{{nb}}', align='C')
 
-
 # ==========================================
-# INICIALIZAÇÃO DA API (FastAPI)
+# INICIALIZAÇÃO DA API (O QUE TINHA SUMIDO!)
 # ==========================================
-app = FastAPI() # <-- O SEU TERMINAL ESTAVA PROCURANDO ISSO AQUI!
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -74,20 +73,26 @@ class DadosAta(BaseModel):
 
 @app.post("/api/gerar-pdf")
 def gerar_pdf(dados: DadosAta):
+    # ==========================================
+    # O CÉREBRO DA OPERAÇÃO: CHAMANDO O GEMINI
+    # ==========================================
     instrucao = f"""
-
+    Você é um assistente executivo sênior da Mega Jr.
+    
     ⚠️ REGRA DE SEGURANÇA MÁXIMA:
     Avalie o texto fornecido pelo usuário. Se ele for apenas letras aleatórias sem sentido (ex: "asdasdasd", "kjdfhgk"), xingamentos, ou não contiver absolutamente nenhuma informação real de uma reunião, você DEVE abortar a missão e responder EXATAMENTE e APENAS com a palavra: ERRO_TEXTO_INVALIDO. Não explique o motivo, apenas devolva essa palavra.
-    
-    Você é um assistente executivo sênior da Mega Jr., uma empresa júnior de tecnologia.
-    Sua tarefa é organizar e melhorar a escrita das anotações de uma reunião.
     
     Anotações cruas:
     - Detalhes: {dados.detalhes}
     - Pontos Soltos: {dados.pontos_importantes}
     
-    Por favor, crie um "Resumo Executivo" profissional e direto ao ponto (máximo de 4 parágrafos).
-    Em seguida, liste as "Ações Definidas" (próximos passos) em bullet points.
+    Se o texto for minimamente válido, crie um texto estruturado da seguinte forma:
+    RESUMO EXECUTIVO:
+    (Escreva 1 ou 2 parágrafos formais resumindo a reunião).
+    
+    AÇÕES DEFINIDAS:
+    (Liste os próximos passos usando hífens - como bullet points).
+    
     Não use formatação Markdown (como ** ou #), apenas texto limpo.
     """
     
@@ -95,46 +100,71 @@ def gerar_pdf(dados: DadosAta):
         model='gemini-2.5-flash',
         contents=instrucao,
     )
-    texto_processado = resposta_ia.text
+    texto_processado = resposta_ia.text.strip()
     
+    # Interceptador de Erros do texto aleatório
+    if texto_processado == "ERRO_TEXTO_INVALIDO":
+        raise HTTPException(
+            status_code=400, 
+            detail="O texto inserido não faz sentido. Por favor, escreva anotações reais da reunião! 🦆"
+        )
+        
+    # ==========================================
+    # GERANDO O PDF COM AS LINHAS ROXAS
+    # ==========================================
     pdf = MegaJrPDF()
     pdf.alias_nb_pages()
 
+    # Carrega as fontes
     using_montserrat = pdf.load_custom_fonts()
     font_family = "Montserrat" if using_montserrat else "helvetica"
 
     pdf.add_page()
     
+    # Banner Topo
     try:
         pdf.image("assets/banner_relatorio_mega.png", x=0, y=0, w=210)
         pdf.ln(25)
     except:
         pdf.ln(10)
     
-    pdf.set_font(font_family, style="B", size=20)
-    pdf.set_text_color(86, 8, 168)
-    pdf.cell(0, 10, "Ata de Reunião Inteligente", new_x="LMARGIN", new_y="NEXT", align="C")
+    # Cabeçalho Principal
+    pdf.set_font(font_family, style="B", size=18)
+    pdf.set_text_color(50, 50, 50)
+    pdf.cell(0, 18, "ATA DE REUNIÃO INTELIGENTE", new_x="LMARGIN", new_y="NEXT", align="C")
     
-    pdf.set_font(font_family, size=12)
+    pdf.set_font(font_family, size=11)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(0, 10, "Processado com Inteligência Artificial pela Mega Jr.", new_x="LMARGIN", new_y="NEXT", align="C")
-    pdf.ln(15)
+    pdf.cell(0, 18, "Processado com Inteligência Artificial pela Mega Jr.", new_x="LMARGIN", new_y="NEXT", align="C")
+    pdf.ln(10)
     
-    pdf.set_font(font_family, style="B", size=14)
-    pdf.set_text_color(86, 8, 168)
-    pdf.cell(0, 10, "INFORMAÇÕES DA REUNIÃO", new_x="LMARGIN", new_y="NEXT")
+    # --- Seção 1: Informações Básicas ---
+    pdf.set_font(font_family, style="B", size=12)
+    pdf.set_text_color(86, 8, 168) # Roxo Mega
+    pdf.cell(0, 8, "INFORMAÇÕES DA REUNIÃO", new_x="LMARGIN", new_y="NEXT")
+    
+    # LINHA ROXA 1
+    pdf.set_fill_color(86, 8, 168)
+    pdf.rect(15, pdf.get_y(), 180, 0.5, style="F") 
+    pdf.ln(3)
     
     pdf.set_font(font_family, style="B", size=11)
     pdf.set_text_color(30, 30, 30)
-    pdf.cell(40, 7, "Data e Horário:")
+    pdf.cell(35, 7, "Data e Horário:")
     pdf.set_font(font_family, size=11)
     pdf.set_text_color(50, 50, 50)
     pdf.cell(0, 7, dados.data_hora, new_x="LMARGIN", new_y="NEXT")
     pdf.ln(10)
     
-    pdf.set_font(font_family, style="B", size=14)
-    pdf.set_text_color(86, 8, 168)
-    pdf.cell(0, 10, "ANÁLISE E RESUMO EXECUTIVO (IA)", new_x="LMARGIN", new_y="NEXT")
+    # --- Seção 2: O Resumo Inteligente (IA) ---
+    pdf.set_font(font_family, style="B", size=12)
+    pdf.set_text_color(86, 8, 168) # Roxo Mega
+    pdf.cell(0, 8, "ANÁLISE E RESUMO EXECUTIVO (IA)", new_x="LMARGIN", new_y="NEXT")
+    
+    # LINHA ROXA 2
+    pdf.set_fill_color(86, 8, 168)
+    pdf.rect(15, pdf.get_y(), 180, 0.5, style="F")
+    pdf.ln(3)
     
     pdf.set_font(font_family, size=11)
     pdf.set_text_color(50, 50, 50)

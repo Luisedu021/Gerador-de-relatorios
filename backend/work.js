@@ -39,7 +39,7 @@ let pdfBlobGerado = null // Guardará o PDF aqui
 
 btnGerar.addEventListener("click", async () => {
   // Validação inicial
-  if (!txtData.value || !txtDetalhes.value || !txtPontos.value) {
+  if (!txtData.value || !txtPontos.value) {
     alert("Preencha todos os campos primeiro! 🦆")
     return
   }
@@ -75,18 +75,45 @@ btnGerar.addEventListener("click", async () => {
       // Joga o erro para o bloco 'catch' lá embaixo
       throw new Error(erroData.detail || "Erro ao processar")
     }
-
-    // D) SUCESSO: Recebe o PDF
     pdfBlobGerado = await resposta.blob()
 
-    // Troca o patinho pela imagem de sucesso
+    // ==========================================
+    // A MÁGICA DA TRANSIÇÃO DE TELA
+    // ==========================================
+
+    // 1. MÁGICA DO FUNDO: Pegamos a caixa inteira e "limpamos" as listras roxas
+    const caixaEsquerda = document.querySelector(".converter-left")
+    caixaEsquerda.style.backgroundImage = "none"
+    caixaEsquerda.style.backgroundColor = "#111827" // Coloca um fundo escuro limpo
+    caixaEsquerda.style.display = "flex" // Centraliza tudo
+    caixaEsquerda.style.flexDirection = "column"
+    caixaEsquerda.style.justifyContent = "center"
+    caixaEsquerda.style.alignItems = "center"
+
+    // 2. MÁGICA DO CONTEÚDO: Colocamos o texto de sucesso
     resultadoContainer.innerHTML = `
-            <div style="text-align: center;">
-                <img src="assets/pdf-pronto.png" alt="Sucesso" style="width: 100px;">
-                <h3 style="color:#ffde59; margin-top:10px; font-family: 'Plus Jakarta Sans';">Ata Pronta!</h3>
+            <div style="text-align: center; animation: fadeIn 0.8s ease-in-out;">
+                
+                <div style="font-size: 70px; margin-bottom: 15px;"></div>
+                
+                <h3 style="color: #ffde59; margin-top: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: bold;">
+                    Ata Finalizada! 
+                </h3>
+                <p style="color: #d6dde6; margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; max-width: 90%; margin: 10px auto;">
+                    O documento foi gerado e formatado nos padrões oficias da Mega Jr.
+                </p>
             </div>
+
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            </style>
         `
-    btnBaixarLower.style.display = "block"
+
+    // Revela o botão
+    btnBaixarLower.style.display = "flex"
   } catch (erro) {
     // Mostra a mensagem de erro (ex: "Texto sem sentido") na tela
     resultadoContainer.innerHTML = `
