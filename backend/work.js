@@ -2,7 +2,7 @@
 // 1. EFEITO DIGITAÇÃO (TYPEWRITER)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-  const titulo = document.querySelector(".Ata-Reuniao h1")
+  const titulo = document.querySelector(".Ata-Reuniao ")
   if (titulo) {
     const texto = titulo.innerHTML
     titulo.innerHTML = ""
@@ -44,18 +44,47 @@ btnGerar.addEventListener("click", async () => {
     return
   }
 
-  // A) Início: Muda o botão e rola a tela
+  // Início: Muda o botão e rola a tela
   btnGerar.innerText = "IA pensando... ✨"
   btnGerar.disabled = true
   conversorSection.scrollIntoView({ behavior: "smooth" })
 
-  // B) Mostra o Patinho (Ajuste o caminho da imagem se necessário)
+  // Mostra o Patinho (Ajuste o caminho da imagem se necessário)
   resultadoContainer.innerHTML = `
-        <div style="text-align: center;">
-            <img src="assets/patinho.gif" alt="Carregando..." style="width: 150px;">
-            <p style="color:white; margin-top:10px; font-family: 'Plus Jakarta Sans';">O patinho está organizando a ata...</p>
-        </div>
-    `
+      <style>
+          /* 1. Mágica do Círculo Perfeito: Dimensões iguais + border-radius 50% */
+          .pato-circular {
+              width: 100px;
+              height: 100px; /* Precisa ser igual à width */
+              border-radius: 50%; /* Faz o círculo */
+              object-fit: cover; /* Garante que o GIF preencha sem distorcer */
+              border: 3px solid #ffde59; /* Opcional: Bordinha Amarela Mega */
+              box-shadow: 0 4px 15px rgba(255, 222, 89, 0.3); /* Opcional: Glow sutil */
+              
+              /* Mantemos a animação de órbita que você já amou */
+              position: absolute;
+              animation: orbitar 3s linear infinite;
+              z-index: 20;
+          }
+
+          /* Mágica da Órbita: O patinho gira 360º, se afasta do centro (translateX), e desfaz o giro (rotate(-360deg)) */
+          @keyframes orbitar {
+              0% { transform: rotate(0deg) translateX(125px) rotate(0deg); }
+              100% { transform: rotate(360deg) translateX(125px) rotate(-360deg); }
+          }
+      </style>
+      
+      <div style="display: flex; align-items: center; justify-content: center; height: 280px; position: relative;">
+          
+          <p style="color: white; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; position: absolute; text-align: center; z-index: 10; margin: 0; line-height: 1.4;">
+              O patinho está<br>
+              <span style="color: #ffde59; font-weight: bold;">organizando a ata...</span>
+          </p>
+          
+          <img src="assets/patinho.gif" alt="Carregando..." class="pato-circular">
+          
+      </div>
+  `
   btnBaixarLower.style.display = "none"
 
   try {
@@ -83,7 +112,7 @@ btnGerar.addEventListener("click", async () => {
 
     // 1. MÁGICA DO FUNDO: Pegamos a caixa inteira e "limpamos" as listras roxas
     const caixaEsquerda = document.querySelector(".converter-left")
-    caixaEsquerda.style.backgroundImage = "none"
+    caixaEsquerda.style.backgroundImage = "url('assets/ata_pronta.png')"
     caixaEsquerda.style.backgroundColor = "#111827" // Coloca um fundo escuro limpo
     caixaEsquerda.style.display = "flex" // Centraliza tudo
     caixaEsquerda.style.flexDirection = "column"
@@ -92,25 +121,22 @@ btnGerar.addEventListener("click", async () => {
 
     // 2. MÁGICA DO CONTEÚDO: Colocamos o texto de sucesso
     resultadoContainer.innerHTML = `
-            <div style="text-align: center; animation: fadeIn 0.8s ease-in-out;">
-                
-                <div style="font-size: 70px; margin-bottom: 15px;"></div>
-                
-                <h3 style="color: #ffde59; margin-top: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: bold;">
-                    Ata Finalizada! 
-                </h3>
-                <p style="color: #d6dde6; margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; max-width: 90%; margin: 10px auto;">
-                    O documento foi gerado e formatado nos padrões oficias da Mega Jr.
-                </p>
-            </div>
-
-            <style>
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-            </style>
-        `
+    <div style="text-align: center; animation: fadeIn 0.8s ease-in-out;">
+        
+        <h3 style="color: #000000; margin-top: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: bold;">
+            Ata Finalizada!
+        </h3>
+        <p style="color: #5608A8; margin-top: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; max-width: 90%; margin: 10px auto;">
+            O documento foi gerado e formatado nos padrões oficiais da Mega Jr.
+        </p>
+    </div>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+`
 
     // Revela o botão
     btnBaixarLower.style.display = "flex"

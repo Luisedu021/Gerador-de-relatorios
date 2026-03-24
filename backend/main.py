@@ -1,8 +1,8 @@
+import os
 from fastapi import FastAPI, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fpdf import FPDF
-import os
 from dotenv import load_dotenv
 from google import genai
 
@@ -12,9 +12,24 @@ load_dotenv()
 # 2. Configura o cliente do Gemini
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-# ==========================================
+
+# INICIALIZAÇÃO DA API (Mova isso para o topo!)
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class DadosAta(BaseModel):
+    data_hora: str
+    detalhes: str
+    pontos_importantes: str
+
 # DEFINIÇÃO DO PADRÃO DO PDF (Design Mega)
-# ==========================================
 class MegaJrPDF(FPDF):
     def load_custom_fonts(self):
         """Carrega a Montserrat. Certifique-se de ter os arquivos TTF na pasta 'fonts'"""
@@ -54,28 +69,15 @@ class MegaJrPDF(FPDF):
         self.set_text_color(0, 0, 0)
         self.cell(0, 5, f'Página {self.page_no()}/{{nb}}', align='C')
 
-# ==========================================
-# INICIALIZAÇÃO DA API (O QUE TINHA SUMIDO!)
-# ==========================================
-app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], 
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-class DadosAta(BaseModel):
-    data_hora: str
-    detalhes: str
-    pontos_importantes: str
+# ROTA PRINCIPAL: GERAR PDF
 
 @app.post("/api/gerar-pdf")
 def gerar_pdf(dados: DadosAta):
-    # ==========================================
+    
     # O CÉREBRO DA OPERAÇÃO: CHAMANDO O GEMINI
-    # ==========================================
+    
     instrucao = f"""
     Você é um assistente executivo sênior da Mega Jr.
     
@@ -109,13 +111,12 @@ def gerar_pdf(dados: DadosAta):
             detail="O texto inserido não faz sentido. Por favor, escreva anotações reais da reunião! 🦆"
         )
         
-    # ==========================================
+   
     # GERANDO O PDF COM AS LINHAS ROXAS
-    # ==========================================
+   
     pdf = MegaJrPDF()
     pdf.alias_nb_pages()
 
-    # Carrega as fontes
     using_montserrat = pdf.load_custom_fonts()
     font_family = "Montserrat" if using_montserrat else "helvetica"
 
@@ -131,17 +132,23 @@ def gerar_pdf(dados: DadosAta):
     # Cabeçalho Principal
     pdf.set_font(font_family, style="B", size=18)
     pdf.set_text_color(50, 50, 50)
-    pdf.cell(0, 18, "ATA DE REUNIÃO INTELIGENTE", new_x="LMARGIN", new_y="NEXT", align="C")
+    
+    # IMPORTANTE: Encode 'latin-1' para evitar erros de acentuação no FPDF
+    titulo = "ATA DE REUNIÃO INTELIGENTE".encode('latin-1', 'replace').decode('latin-1')
+    pdf.cell(0, 18, titulo, new_x="LMARGIN", new_y="NEXT", align="C")
     
     pdf.set_font(font_family, size=11)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(0, 18, "Processado com Inteligência Artificial pela Mega Jr.", new_x="LMARGIN", new_y="NEXT", align="C")
+    subtitulo = "Processado com Inteligência Artificial pela Mega Jr.".encode('latin-1', 'replace').decode('latin-1')
+    pdf.cell(0, 18, subtitulo, new_x="LMARGIN", new_y="NEXT", align="C")
     pdf.ln(10)
     
     # --- Seção 1: Informações Básicas ---
     pdf.set_font(font_family, style="B", size=12)
     pdf.set_text_color(86, 8, 168) # Roxo Mega
-    pdf.cell(0, 8, "INFORMAÇÕES DA REUNIÃO", new_x="LMARGIN", new_y="NEXT")
+    
+    sec1 = "INFORMAÇÕES DA REUNIÃO".encode('latin-1', 'replace').decode('latin-1')
+    pdf.cell(0, 8, sec1, new_x="LMARGIN", new_y="NEXT")
     
     # LINHA ROXA 1
     pdf.set_fill_color(86, 8, 168)
@@ -150,16 +157,22 @@ def gerar_pdf(dados: DadosAta):
     
     pdf.set_font(font_family, style="B", size=11)
     pdf.set_text_color(30, 30, 30)
-    pdf.cell(35, 7, "Data e Horário:")
+    label_data = "Data e Horário:".encode('latin-1', 'replace').decode('latin-1')
+    pdf.cell(35, 7, label_data)
+    
     pdf.set_font(font_family, size=11)
     pdf.set_text_color(50, 50, 50)
-    pdf.cell(0, 7, dados.data_hora, new_x="LMARGIN", new_y="NEXT")
+    
+    data_limpa = dados.data_hora.encode('latin-1', 'replace').decode('latin-1')
+    pdf.cell(0, 7, data_limpa, new_x="LMARGIN", new_y="NEXT")
     pdf.ln(10)
     
     # --- Seção 2: O Resumo Inteligente (IA) ---
     pdf.set_font(font_family, style="B", size=12)
     pdf.set_text_color(86, 8, 168) # Roxo Mega
-    pdf.cell(0, 8, "ANÁLISE E RESUMO EXECUTIVO (IA)", new_x="LMARGIN", new_y="NEXT")
+    
+    sec2 = "ANÁLISE E RESUMO EXECUTIVO (IA)".encode('latin-1', 'replace').decode('latin-1')
+    pdf.cell(0, 8, sec2, new_x="LMARGIN", new_y="NEXT")
     
     # LINHA ROXA 2
     pdf.set_fill_color(86, 8, 168)
@@ -168,7 +181,10 @@ def gerar_pdf(dados: DadosAta):
     
     pdf.set_font(font_family, size=11)
     pdf.set_text_color(50, 50, 50)
-    pdf.multi_cell(0, 7, texto_processado) 
+    
+    # Corrige os caracteres do texto gigantesco que volta do Gemini
+    texto_final = texto_processado.encode('latin-1', 'replace').decode('latin-1')
+    pdf.multi_cell(0, 7, texto_final) 
 
     pdf_bytes = bytes(pdf.output())
     return Response(
