@@ -88,15 +88,18 @@ btnGerar.addEventListener("click", async () => {
   btnBaixarLower.style.display = "none"
 
   try {
-    const resposta = await fetch("http://127.0.0.1:8000/api/gerar-pdf", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        data_hora: txtData.value,
-        detalhes: txtDetalhes.value,
-        pontos_importantes: txtPontos.value,
-      }),
-    })
+    const resposta = await fetch(
+      "https://gerador-de-relatorios-i9im.onrender.com/api/gerar-pdf",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          data_hora: txtData.value,
+          detalhes: txtDetalhes.value,
+          pontos_importantes: txtPontos.value,
+        }),
+      },
+    )
 
     // C) TRATAMENTO DE ERRO (Texto aleatório/inválido)
     if (!resposta.ok) {

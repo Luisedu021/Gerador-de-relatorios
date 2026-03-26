@@ -1,6 +1,6 @@
 fastapi
 uvicorn
 pydantic
-fpdf
+fpdf2
 python-dotenv
 google-genai
