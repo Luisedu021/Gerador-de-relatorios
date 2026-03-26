@@ -6,7 +6,7 @@
 
 # 📄✨ Gerador de Atas Inteligente - Mega Jr.
 
-Uma aplicação web full-stack que utiliza Inteligência Artificial para transformar anotações rápidas e informais de reuniões em Atas Executivas profissionais, estruturadas e formatadas automaticamente em PDF nos padrões da empresa.
+Uma aplicação web full-stack que utiliza Inteligência Artificial para transformar anotações rápidas e informais de reuniões em Atas Executivas profissionais, estruturadas e formatadas automaticamente em PDF nos padrões da empresa feito especialmente para a empresa o qual atuo no momento.
 
 ## 🚀 Funcionalidades
 
@@ -28,12 +28,6 @@ Uma aplicação web full-stack que utiliza Inteligência Artificial para transfo
 - [FastAPI] (Construção da API REST)
 - [FPDF2] (Geração do PDF)
 - Google GenAI SDK (Integração com Gemini)
-- Hospedagem: [Render](https://render.com/)
-
-## ⚙️ Como rodar o projeto localmente
-
-1. **Clone o reposi
-
 
 
 ### 🇺🇸 English Version (`README-en.md`)
@@ -41,7 +35,7 @@ Uma aplicação web full-stack que utiliza Inteligência Artificial para transfo
 ```markdown
 # 📄✨ Smart Meeting Minutes Generator - Mega Jr.
 
-A full-stack web application that leverages Artificial Intelligence to transform raw, informal meeting notes into professional, structured Executive Meeting Minutes, automatically formatted and exported as a standardized PDF.
+A full-stack web application that leverages Artificial Intelligence to transform raw, informal meeting notes into professional, structured Executive Meeting Minutes, automatically formatted and exported as a standardized PDF to the interprise I am working at the moment.
 
 ## 🚀 Features
 
