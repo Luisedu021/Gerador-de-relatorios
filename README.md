@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="fronted/assets/tela_git.png" alt="Demonstração do Gerador de Atas" width="700px" />
+  <img src="frontend/assets/tela_git.png" alt="Demonstração do Gerador de Atas" width="700px" />
 </div>
 
 <br>
