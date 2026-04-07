@@ -285,7 +285,6 @@ body {
   gap: 36px;
 }
 
-/* Efeitos Globais Compartilhados de Hover/Active */
 .btn-amarelo:hover,
 .btn-amarelo-2:hover,
 .btn-amarelo:active,
@@ -296,23 +295,18 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Cores específicas de Hover */
 .btn-amarelo:hover,
 .btn-amarelo-2:hover {
   background-color: rgba(231, 219, 104, 0.05);
   border: 1px solid rgba(209, 187, 87, 0.1);
 }
 
-/* Cores específicas de Active */
 .btn-amarelo:active,
 .btn-amarelo-2:active {
   background-color: rgba(255, 233, 32, 0.05);
   border: 1px solid rgba(250, 218, 75, 0.1);
 }
 
-/* =========================================
-   RODAPÉ (FOOTER)
-========================================= */
 .mega-footer {
   display: flex;
   justify-content: space-between;
@@ -399,11 +393,10 @@ body {
   transform: scale(1.1);
 }
 
-/* Classe agrupada para aplicar o filtro amarelo nos ícones do footer */
 .location-icon img,
 .mega-duck-logo,
 .social-icon img {
-  width: 100%; /* Padroniza o comportamento dentro dos containers flex */
+  width: 100%;
   height: auto;
   filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
     hue-rotate(349deg) brightness(101%) contrast(98%);
@@ -414,4 +407,102 @@ body {
 }
 .mega-duck-logo {
   width: 38px;
+}
+
+/* ajuste de responsividade  */
+
+@media (max-width: 768px) {
+  /* 1. Ajustes do Título e Cabeçalho */
+  .header {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  h1.Ata-Reuniao {
+    font-size: 1.8rem; /* Evita que o título quebre em 4 linhas */
+    margin-top: 10px;
+  }
+
+  /* 2. O Miolo do Aplicativo (Card Body) */
+  .card-body {
+    flex-direction: column; /* Coloca a caixa de Data embaixo das caixas de Texto */
+    gap: 20px;
+  }
+
+  .coluna-textos,
+  .side-box {
+    width: 100%; /* Faz as caixas ocuparem a tela toda */
+  }
+
+  /* Garante que os textareas não vazem da tela (Regra de Ouro) */
+  .caixa-texto,
+  .caixa-data-hora {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 120px;
+  }
+
+  /* 3. Botões Gigantes para o Polegar (Regra de UX) */
+  .card-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn-amarelo,
+  .btn-amarelo-2 {
+    width: 100%; /* Botão largo é mais fácil de clicar no celular */
+    padding: 15px;
+  }
+
+  /* 4. Área de Conversão / Baixar PDF */
+  .converter {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 10px;
+  }
+
+  .converter-left,
+  .converter-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* 5. Rodapé (Footer) em Coluna */
+  .mega-footer {
+    flex-direction: column; /* Coloca o endereço, logo e redes sociais um embaixo do outro */
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    padding: 30px 15px;
+  }
+
+  .footer-section {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .location-block p {
+    font-size: 0.9rem; /* Diminui um pouco o texto do endereço */
+  }
+
+  .social-inner {
+    justify-content: center;
+    flex-wrap: wrap; /* Se faltar espaço para os ícones, eles descem de linha */
+  }
+}
+
+/* ======================================================
+   📱 AJUSTE EXTRA - CELULARES MUITO PEQUENOS (Max 480px)
+   ====================================================== */
+@media (max-width: 480px) {
+  h1.Ata-Reuniao {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    width: 95%; /* Dá uma leve margem nas bordas para não colar na tela */
+    padding: 15px;
+  }
 }
