@@ -1,6 +1,3 @@
-// ==========================================
-// 1. EFEITO DIGITAÇÃO (TYPEWRITER)
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   const titulo = document.querySelector(".Ata-Reuniao ")
   if (titulo) {
@@ -18,10 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 })
 
-// ==========================================
-// 2. INTEGRAÇÃO COM IA E ANIMAÇÕES
-// ==========================================
-
 const btnGerar = document.querySelector(".btn-amarelo")
 const txtData = document.querySelector(".caixa-data-hora")
 const txtDetalhes = document.querySelector(
@@ -35,22 +28,22 @@ const conversorSection = document.getElementById("conversor")
 const resultadoContainer = document.getElementById("resultado-container")
 const btnBaixarLower = document.getElementById("btn-baixar")
 
-let pdfBlobGerado = null // Guardará o PDF aqui
+let pdfBlobGerado =
+  null /
+  btnGerar.addEventListener("click", async () => {
+    // Validação inicial
+    if (!txtData.value || !txtPontos.value) {
+      alert("Preencha todos os campos primeiro! 🦆")
+      return
+    }
 
-btnGerar.addEventListener("click", async () => {
-  // Validação inicial
-  if (!txtData.value || !txtPontos.value) {
-    alert("Preencha todos os campos primeiro! 🦆")
-    return
-  }
+    // Início: Muda o botão e rola a tela
+    btnGerar.innerText = "IA pensando... ✨"
+    btnGerar.disabled = true
+    conversorSection.scrollIntoView({ behavior: "smooth" })
 
-  // Início: Muda o botão e rola a tela
-  btnGerar.innerText = "IA pensando... ✨"
-  btnGerar.disabled = true
-  conversorSection.scrollIntoView({ behavior: "smooth" })
-
-  // Mostra o Patinho (Ajuste o caminho da imagem se necessário)
-  resultadoContainer.innerHTML = `
+    // Mostra o Patinho (Ajuste o caminho da imagem se necessário)
+    resultadoContainer.innerHTML = `
       <style>
           /* 1. Mágica do Círculo Perfeito: Dimensões iguais + border-radius 50% */
           .pato-circular {
@@ -85,45 +78,38 @@ btnGerar.addEventListener("click", async () => {
           
       </div>
   `
-  btnBaixarLower.style.display = "none"
+    btnBaixarLower.style.display = "none"
 
-  try {
-    const resposta = await fetch(
-      "https://gerador-de-relatorios-i9im.onrender.com/api/gerar-pdf",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data_hora: txtData.value,
-          detalhes: txtDetalhes.value,
-          pontos_importantes: txtPontos.value,
-        }),
-      },
-    )
+    try {
+      const resposta = await fetch(
+        "https://gerador-de-relatorios-i9im.onrender.com/api/gerar-pdf",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            data_hora: txtData.value,
+            detalhes: txtDetalhes.value,
+            pontos_importantes: txtPontos.value,
+          }),
+        },
+      )
 
-    // C) TRATAMENTO DE ERRO (Texto aleatório/inválido)
-    if (!resposta.ok) {
-      const erroData = await resposta.json()
-      // Joga o erro para o bloco 'catch' lá embaixo
-      throw new Error(erroData.detail || "Erro ao processar")
-    }
-    pdfBlobGerado = await resposta.blob()
+      if (!resposta.ok) {
+        const erroData = await resposta.json()
+        // Joga o erro para o bloco 'catch' lá embaixo
+        throw new Error(erroData.detail || "Erro ao processar")
+      }
+      pdfBlobGerado = await resposta.blob()
 
-    // ==========================================
-    // A MÁGICA DA TRANSIÇÃO DE TELA
-    // ==========================================
+      const caixaEsquerda = document.querySelector(".converter-left")
+      caixaEsquerda.style.backgroundImage = "url('assets/ata_pronta.png')"
+      caixaEsquerda.style.backgroundColor = "#111827" // Coloca um fundo escuro limpo
+      caixaEsquerda.style.display = "flex" // Centraliza tudo
+      caixaEsquerda.style.flexDirection = "column"
+      caixaEsquerda.style.justifyContent = "center"
+      caixaEsquerda.style.alignItems = "center"
 
-    // 1. MÁGICA DO FUNDO: Pegamos a caixa inteira e "limpamos" as listras roxas
-    const caixaEsquerda = document.querySelector(".converter-left")
-    caixaEsquerda.style.backgroundImage = "url('assets/ata_pronta.png')"
-    caixaEsquerda.style.backgroundColor = "#111827" // Coloca um fundo escuro limpo
-    caixaEsquerda.style.display = "flex" // Centraliza tudo
-    caixaEsquerda.style.flexDirection = "column"
-    caixaEsquerda.style.justifyContent = "center"
-    caixaEsquerda.style.alignItems = "center"
-
-    // 2. MÁGICA DO CONTEÚDO: Colocamos o texto de sucesso
-    resultadoContainer.innerHTML = `
+      resultadoContainer.innerHTML = `
     <div style="text-align: center; animation: fadeIn 0.8s ease-in-out;">
         
         <h3 style="color: #000000; margin-top: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: bold;">
@@ -141,25 +127,20 @@ btnGerar.addEventListener("click", async () => {
     </style>
 `
 
-    // Revela o botão
-    btnBaixarLower.style.display = "flex"
-  } catch (erro) {
-    // Mostra a mensagem de erro (ex: "Texto sem sentido") na tela
-    resultadoContainer.innerHTML = `
+      btnBaixarLower.style.display = "flex"
+    } catch (erro) {
+      resultadoContainer.innerHTML = `
             <div style="text-align: center;">
                 <h3 style="color: #ff5959; font-family: 'Plus Jakarta Sans';">Algo deu errado!</h3>
                 <p style="color: white; margin-top: 10px;">${erro.message}</p>
             </div>
         `
-  } finally {
-    btnGerar.innerText = "Gerar Resumo"
-    btnGerar.disabled = false
-  }
-})
+    } finally {
+      btnGerar.innerText = "Gerar Resumo"
+      btnGerar.disabled = false
+    }
+  })
 
-// ==========================================
-// 3. LÓGICA DO BOTÃO DE BAIXAR (FINAL)
-// ==========================================
 btnBaixarLower.addEventListener("click", () => {
   if (!pdfBlobGerado) return
   const url = window.URL.createObjectURL(pdfBlobGerado)
