@@ -1,6 +1,3 @@
-/* =========================================
-   ESTRUTURA GLOBAL E TIPOGRAFIA
-========================================= */
 body {
   background:
     radial-gradient(
@@ -12,7 +9,7 @@ body {
   background-size: 100% 500px;
   background-repeat: no-repeat;
   color: #020101;
-  margin: 0; /* Boa prática caso não tenha reset */
+  margin: 0;
 }
 
 @keyframes fadeIn {
@@ -29,8 +26,6 @@ body {
   padding: 16px 0;
   justify-content: center;
   align-items: center;
-  gap: 303px;
-  align-self: stretch;
   background-color: transparent;
 }
 
@@ -63,166 +58,36 @@ body {
 }
 
 .logo-mid {
-  background-image: url("assets/Mega_jr.svg");
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: contain;
+  background: url("assets/Mega_jr.svg") left center/contain no-repeat;
   width: 150px;
   height: 60px;
-  display: block;
-  margin-top: 30px;
-  margin-left: 41px;
+  margin: 30px 0 0 41px;
 }
 
 /* =========================================
-   CONTAINER PRINCIPAL (CARTÃO)
+   CONTAINER PRINCIPAL E CONVERSOR
 ========================================= */
+.container,
+.converter {
+  width: 90%;
+  max-width: 1024px;
+  margin: 40px auto;
+  display: flex;
+}
+
 .container {
   border-radius: 16px;
   border: 1.5px solid rgba(214, 221, 230, 0.2);
   background: #1e1e1e;
   box-shadow:
-    0 311px 87px 0 rgba(0, 0, 0, 0),
-    0 199px 80px 0 rgba(0, 0, 0, 0),
     0 112px 67px 0 rgba(0, 0, 0, 0.02),
-    0 50px 50px 0 rgba(0, 0, 0, 0.03),
-    0 12px 27px 0 rgba(0, 0, 0, 0.03);
-
-  width: 90%;
-  max-width: 1024px;
-  margin: 40px auto;
+    0 50px 50px 0 rgba(0, 0, 0, 0.03);
   min-height: 720px;
-  display: flex;
   flex-direction: column;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0;
-}
-
-.card-body {
-  display: flex;
-  flex: 1;
-  gap: 20px;
-  padding: 20px 41px 41px 41px;
-  align-items: stretch;
-}
-
-/* =========================================
-   FORMULÁRIOS E INPUTS
-========================================= */
-.side-box {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-self: stretch;
-}
-
-.side-box label {
-  color: var(
-    --text-gray,
-    #9ca3af
-  ); /* Adicionado fallback caso a variável falhe */
-  margin-bottom: 20px;
-  font-size: 15px;
-}
-
-.datetime-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Base comum para todos os inputs do layout */
-.input-small,
-.caixa-texto,
-.caixa-data-hora {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-.input-small {
-  padding: 12px;
-  border-radius: 8px;
-  color-scheme: dark;
-  font-size: 14px;
-}
-.input-small,
-.caixa-texto,
-.caixa-data-hora {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Curva de animação premium (suave no final) */
-  transform-origin: center;
-}
-
-/* EFEITO 1: Quando passa o mouse por cima (Hover) */
-.input-small:hover:not(:focus),
-.caixa-texto:hover:not(:focus),
-.caixa-data-hora:hover:not(:focus) {
-  border-color: rgba(255, 255, 255, 0.3); /* Borda fica mais visível */
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-/* EFEITO 2: Quando clica para digitar (Focus) - A Mágica! */
-.input-small:focus,
-.caixa-texto:focus,
-.caixa-data-hora:focus {
-  outline: none; /* Tira aquela borda azul feia padrão do navegador */
-  border-color: #ffde59; /* Borda fica com o amarelo da Mega */
-  background-color: rgba(255, 255, 255, 0.08);
-
-  /* Cria um "Glow" (brilho) amarelo em volta da caixa e uma sombra para parecer que ela saltou */
-  box-shadow:
-    0 0 0 4px rgba(255, 222, 89, 0.15),
-    0 8px 16px rgba(0, 0, 0, 0.3);
-
-  transform: translateY(-2px); /* Dá uma leve "levantada" para o usuário */
-}
-
-.caixa-texto,
-.caixa-data-hora {
-  border-radius: 12px;
-  padding: 20px;
-  font-size: 16px;
-  overflow: hidden;
-  resize: none;
-  flex: 1;
-}
-
-.caixa-data-hora {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.caixa-texto::placeholder,
-.caixa-data-hora::placeholder {
-  color: #ffffff;
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  opacity: 1;
-}
-
-.coluna-textos {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex: 2;
-}
-
-/* =========================================
-   BLOCO CONVERSOR
-========================================= */
 .converter {
-  display: flex;
-  gap: 20px;
   min-height: 580px;
-  width: 90%;
-  max-width: 1024px;
-  margin: 40px auto;
   overflow: hidden;
   border-radius: 36px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -231,21 +96,100 @@ body {
     rgba(255, 255, 255, 0.03) 27.37%,
     rgba(162, 210, 96, 0.04) 96.85%
   );
+  gap: 20px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.card-body {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  padding: 20px 41px 41px;
+  align-items: stretch;
+}
+
+.side-box,
+.coluna-textos {
+  display: flex;
+  flex-direction: column;
+}
+.side-box {
+  flex: 1;
+  align-self: stretch;
+}
+.coluna-textos {
+  gap: 20px;
+  flex: 2;
+}
+.side-box label {
+  color: var(--text-gray, #9ca3af);
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.input-small,
+.caixa-texto,
+.caixa-data-hora {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-small {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.caixa-texto,
+.caixa-data-hora {
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 16px;
+  resize: none;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+.caixa-texto::placeholder,
+.caixa-data-hora::placeholder {
+  color: #ffffff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 18px;
+}
+
+.input-small:hover:not(:focus),
+.caixa-texto:hover:not(:focus),
+.caixa-data-hora:hover:not(:focus) {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.input-small:focus,
+.caixa-texto:focus,
+.caixa-data-hora:focus {
+  outline: none;
+  border-color: #ffde59;
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 4px rgba(255, 222, 89, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
 
 .converter-left {
   flex: 1;
-  background-image: url("assets/purple_conversor.svg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("assets/purple_conversor.svg") center/cover no-repeat;
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 40px;
   align-self: stretch;
 }
-
 .converter-right {
   flex: 3;
   display: flex;
@@ -253,10 +197,6 @@ body {
   align-items: center;
 }
 
-/* =========================================
-   BOTÕES AMARELOS
-========================================= */
-/* Propriedades compartilhadas */
 .btn-amarelo,
 .btn-amarelo-2 {
   background-color: #ffde59;
@@ -268,15 +208,15 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease; /* Transição suave adicionada */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* Propriedades exclusivas */
 .btn-amarelo {
-  margin-top: 30px;
-  margin-right: 41px;
+  margin: 30px 41px 0 0;
 }
-
 .btn-amarelo-2 {
   display: flex;
   flex-direction: column;
@@ -286,25 +226,17 @@ body {
 }
 
 .btn-amarelo:hover,
-.btn-amarelo-2:hover,
-.btn-amarelo:active,
-.btn-amarelo-2:active {
-  color: #ffffff;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-}
-
-.btn-amarelo:hover,
 .btn-amarelo-2:hover {
-  background-color: rgba(231, 219, 104, 0.05);
-  border: 1px solid rgba(209, 187, 87, 0.1);
+  background-color: #ffe677;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 222, 89, 0.4);
 }
 
 .btn-amarelo:active,
 .btn-amarelo-2:active {
-  background-color: rgba(255, 233, 32, 0.05);
-  border: 1px solid rgba(250, 218, 75, 0.1);
+  background-color: #e5c74f;
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(255, 222, 89, 0.3);
 }
 
 .mega-footer {
@@ -322,44 +254,33 @@ body {
 .footer-section {
   display: flex;
   align-items: center;
-}
-
-.location-block {
   flex: 1;
+}
+.location-block {
   justify-content: flex-start;
   gap: 15px;
 }
-
 .logo-block {
-  flex: 1;
   justify-content: center;
 }
-
 .social-block {
-  flex: 1;
   justify-content: flex-end;
 }
 
-.logo-inner,
-.social-inner,
-.us-block {
+.logo-inner {
   display: flex;
   align-items: center;
-}
-
-.logo-inner {
   gap: 8px;
 }
 .social-inner {
+  display: flex;
+  align-items: center;
   gap: 20px;
 }
 .us-block {
+  display: flex;
+  align-items: center;
   padding-right: 20px;
-}
-
-.us-logo {
-  height: 30px;
-  width: auto;
 }
 
 .address-text p {
@@ -369,39 +290,10 @@ body {
   margin: 0;
   line-height: 1.4;
 }
-
-.logo-text-wrapper p {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-weight: 700;
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.1;
-  color: #ffde59;
+.us-logo {
+  height: 30px;
+  width: auto;
 }
-
-.social-icon {
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: transform 0.2s ease;
-}
-
-.social-icon:hover {
-  transform: scale(1.1);
-}
-
-.location-icon img,
-.mega-duck-logo,
-.social-icon img {
-  width: 100%;
-  height: auto;
-  filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
-    hue-rotate(349deg) brightness(101%) contrast(98%);
-}
-
 .location-icon img {
   width: 20px;
 }
@@ -409,100 +301,136 @@ body {
   width: 38px;
 }
 
-/* ajuste de responsividade  */
+.social-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-icon img {
+  width: 22px;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: rgba(255, 222, 89, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(255, 222, 89, 0.2);
+}
+
+.social-icon:hover img {
+  transform: scale(1.15);
+}
+.location-icon img,
+.mega-duck-logo,
+.social-icon img {
+  filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
+    hue-rotate(349deg) brightness(101%) contrast(98%);
+}
 
 @media (max-width: 768px) {
-  /* 1. Ajustes do Título e Cabeçalho */
   .header {
     flex-direction: column;
     text-align: center;
     padding: 15px;
   }
-
   h1.Ata-Reuniao {
-    font-size: 1.8rem; /* Evita que o título quebre em 4 linhas */
+    font-size: 1.8rem;
     margin-top: 10px;
   }
 
-  /* 2. O Miolo do Aplicativo (Card Body) */
   .card-body {
-    flex-direction: column; /* Coloca a caixa de Data embaixo das caixas de Texto */
-    gap: 20px;
+    flex-direction: column;
+    padding: 20px;
   }
-
   .coluna-textos,
   .side-box {
-    width: 100%; /* Faz as caixas ocuparem a tela toda */
+    width: 100%;
   }
-
-  /* Garante que os textareas não vazem da tela (Regra de Ouro) */
   .caixa-texto,
   .caixa-data-hora {
-    width: 100%;
-    box-sizing: border-box;
     min-height: 120px;
   }
 
-  /* 3. Botões Gigantes para o Polegar (Regra de UX) */
   .card-header {
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    padding: 20px 0;
   }
-
   .btn-amarelo,
   .btn-amarelo-2 {
-    width: 100%; /* Botão largo é mais fácil de clicar no celular */
+    width: 90%;
+    margin: 10px 0 0 0;
     padding: 15px;
   }
 
-  /* 4. Área de Conversão / Baixar PDF */
   .converter {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px 10px;
+    padding: 0;
+    min-height: auto;
   }
-
   .converter-left,
   .converter-right {
     width: 100%;
-    justify-content: center;
+    box-sizing: border-box;
+  }
+  .converter-left {
+    min-height: 250px;
+    padding: 20px;
+  }
+  .converter-right {
+    padding: 30px 20px;
   }
 
-  /* 5. Rodapé (Footer) em Coluna */
   .mega-footer {
-    flex-direction: column; /* Coloca o endereço, logo e redes sociais um embaixo do outro */
-    align-items: center;
+    flex-direction: column;
     text-align: center;
     gap: 30px;
     padding: 30px 15px;
   }
-
   .footer-section {
     width: 100%;
     justify-content: center;
   }
-
-  .location-block p {
-    font-size: 0.9rem; /* Diminui um pouco o texto do endereço */
-  }
-
   .social-inner {
-    justify-content: center;
-    flex-wrap: wrap; /* Se faltar espaço para os ícones, eles descem de linha */
+    flex-wrap: wrap;
   }
 }
 
-/* ======================================================
-   📱 AJUSTE EXTRA - CELULARES MUITO PEQUENOS (Max 480px)
-   ====================================================== */
+/*
+   📱 RESPONSIVIDADE EXTRA - CELULARES PEQUENOS (Max 480px)
+ */
 @media (max-width: 480px) {
   h1.Ata-Reuniao {
     font-size: 1.5rem;
   }
-
-  .container {
-    width: 95%; /* Dá uma leve margem nas bordas para não colar na tela */
-    padding: 15px;
+  .container,
+  .converter {
+    width: 85%;
   }
+  .container {
+    padding: 10px 0;
+  }
+}
+
+.logo-mid,
+.us-logo {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* O Efeito Hover das Logos */
+.mega-logo:hover,
+.us-logo:hover {
+  transform: scale(1.08) translateY(-1px); /* Cresce um pouco e dá um "pulinho" */
+
+  /* Mantém a cor original e adiciona um brilho amarelo por trás do desenho da logo! */
+  filter: brightness(0) saturate(100%) invert(88%) sepia(59%) saturate(464%)
+    hue-rotate(349deg) brightness(101%) contrast(98%)
+    drop-shadow(0 4px 10px rgba(255, 222, 89, 0.4));
 }
