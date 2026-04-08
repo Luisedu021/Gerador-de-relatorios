@@ -18,16 +18,22 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 app = FastAPI()
 
 origens_permitidas = [
-    "https://seu-site-da-vercel.vercel.app", # Só o SEU site oficial pode fazer pedidos
-    "http://127.0.0.1:8000", # Para você poder testar localmente
+    
+    "https://mega-jr-atas.vercel.app", 
+    
+   
+    "http://127.0.0.1:5500", 
+    "http://localhost:5500",
+    
+   
+    "http://127.0.0.1:8000", 
     "http://localhost:8000"
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origens_permitidas,
     allow_credentials=True,
-    allow_methods=["*"], # Permite POST, GET, etc
+    allow_methods=["*"], 
     allow_headers=["*"],
 )
 
